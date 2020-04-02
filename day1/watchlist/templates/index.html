@@ -1,27 +1,15 @@
-<!DOCTYPE html>
-<html lang="zh">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Dws WatchList</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css')}}">
-</head>
-<body>
-    <h2>
-        <img class='avatar'src="{{ url_for('static', filename='images/111.png')}}" alt="图片">
-        {{ name }} WatchList</h2>
+    {% extends 'base.html' %}
+    {% block content %}
     {# 过滤器 变量|过滤器名 #}
     <p>总共{{ moviews|length }}个</p>
     <ul class="movie_list">
         {% for movie in movies %}
         <li>
             {{ movie.title }} - {{ movie.year }}
+            <span class="float-right">
+                <a class='baidu' href="https://v.qq.com/x/search/?q={{ movie.title }}" target="_blank", title="在腾讯视频中查找">腾讯视频</a>
+            </span>
         </li>
         {% endfor %}
     </ul>
-    <footer>
-        <small>&copy;2020 <a href="#">Dws电影列表</a> </small>
-    </footer>
-</body>
-</html>
+    {% endblock %}
