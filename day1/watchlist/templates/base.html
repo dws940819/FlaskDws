@@ -14,6 +14,9 @@
         <img class='avatar'src="{{ url_for('static', filename='images/111.png')}}" alt="图片">
         {{ user.name }} WatchList
     </h2>
+    {% for message in get_flashed_messages() %}
+        <div class="alert">{{ message }}</div>
+    {% endfor %}
     <nav>
         <ul>
             <li>
