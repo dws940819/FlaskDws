@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>倒计时训练</title>
+    <script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.js"></script>
+    <link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.css" rel="stylesheet">
+
+</head>
+<body>
+    <div id='app' class="container">
+        <h2>
+            <span>倒计时器</span>
+            <button v-on:click='start'>
+                <span class='glyphicon glyphicon-play'> </span>
+            </button>
+        </h2>
+        <div class="well">
+            <div class="dao-timer">
+                <span>{{ minute }}</span>分钟:<span>{{ second }}</span>秒
+            </div>
+        </div>
+    </div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"> </script>
+<script>
+    const WORK_STATES = {
+        WORK:'工作',
+        REST:'休息'
+    }
+
+    const WORKING_TIME_LENGTH_IN_MUNUTES = 25
+    const RESTING_TIME_LENGTH_IN_MUNUTES = 5
+    
+    new Vue({
+        el:'#app',
+        data:{
+            minute:WORKING_TIME_LENGTH_IN_MUNUTES,
+            second:0,
+            workState:WORK_STATES,
+            timestamp:0
+        },
+        methods:{
+            start:function(){
+                this._tick();
+                this.interval = setInterval(this._tick,1000)
+            },
+            _tick:function(){
+                // 秒second不是0
+                if(this.second !== 0){
+                    this.second --;
+                    return
+                }
+                // second是0，minute不是0
+                if(this.minute !== 0){
+                    this.minute--;
+                    this.second = 59;
+                    return;
+                }
+                // 秒和分钟都是0，minute（分钟） 和second（秒）
+                this.workState = this.workState === WORK_STATES.WORK ? WORK_STATES.REST:WORK_STATES.WORK
+
+                if(this.workState === WORK_STATES.WORK){
+                    this.minute = WORKING_TIME_LENGTH_IN_MUNUTES
+                }else{
+                    this.minute = RESTING_TIME_LENGTH_IN_MUNUTES
+                }
+            }
+        }
+    })
+</script>
+</html>
