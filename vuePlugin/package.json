@@ -1,0 +1,13 @@
+{
+    "name": "vuePlugin",
+    "scripts": {
+      "build": "browserify script.js -o main.js -t [babel --preset[es2015]]"
+    },
+    "devDependencies": {
+        "vue": "^2.5.2",
+        "chromedriver": "^81.0.0",
+        "babel-preset-es2015":"^6.24.1",
+        "browserify":"^16.5.1"
+    }
+  }
+  
