@@ -1,13 +1,21 @@
-import Vue from './node_modules.vue/dist/vue'
-import VuePlugin from './VueMathPlugin.js'
+import Vue from 'vue/dist/vue.js'
+import VueMathPlugin from './VueMathPlugin.js'
+import Vuex from 'vuex'
 
+Vue.use(VueMathPlugin)
+Vue.use(Vuex)
 
-Vue.use(VuePlugin)
+var store = new Vuex.Store({
+    state:{message:'Hello!'},
+    mutations:{}
+})
 
 
 new Vue({
     el:'#app',
     data:{
         item:20
-    }
+    },
+    comments:"",
+    store:store
 })
