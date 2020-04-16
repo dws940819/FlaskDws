@@ -6,7 +6,7 @@
         <template v-for='product in productList'>
           <h3>{{ product.title }}</h3>
           <ul>
-            <li v-for="item in product.list" :key="item">
+            <li v-for="(item, ite) in product.list" :key="ite">
               <a v-bind:href='item.url'>{{ item.title }}</a>
               <span v-if="item.hot" class='hot-tag'>HOT</span>
             </li>
@@ -27,7 +27,7 @@
               <a v-bind:href="u.url">{{u.text}}</a>
               
               </li> -->
-              <li v-for="news in newsList">
+              <li v-for="(news, si) in newsList" :key="si">
             <a v-bind:href="news.url">{{ news.title }}</a>
           </li>
           </ul>
@@ -35,15 +35,13 @@
       </div>
     </div>
     <div class="index-rigt">
-        <div style="font-size:80px;text-align:center;line-height:300px;width:1031.8px;height:300px;background:red;margin:0 auto;">
-            slider
-        </div>
+        <slider-component></slider-component>
         <div class='index-board-list'>
-            <div class="index-board-item" v-for="lis in lists" :key="lis">
+            <div class="index-board-item" v-for="(lis, li) in boardList" :key="li">
                 <div class="index-board-item-inner">
                     <h2>{{lis.title}}</h2>
-                    <p>{{lis.text}}</p>
-                    <div class="index-board-button"><a v-bind:href='lis.url'></a>{{lis.texts}}</div>
+                    <p>{{lis.description}}</p>
+                    <div class="index-board-button"><a v-bind:href='lis.url'></a>{{lis.saleout}}</div>
                 </div>
             </div>
 
@@ -55,7 +53,12 @@
 
 <script>
 import axios from 'axios'
+import SliderComponent from './sliderComponent'
+
 export default {
+  components:{
+    SliderComponent
+    },
   mounted() {
     axios.get("api/getNewsList")
       .then((response) => {
@@ -67,110 +70,30 @@ export default {
         // handle error
         console.log(error);
       });
+      axios.get('api/getProductList')
+      .then((response) => {
+        console.log(response);
+        this.productList = response.data
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+      axios.get('api/getBoardList')
+      .then((response) => {
+        console.log(response);
+        this.boardList = response.data
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    
   },
   data() {
     return {
       newsList: [],
-      productList: {
-        pc: {
-          title: "PC产品",
-          list: [
-            {
-              title: "数据统计",
-              url: "http://starcraft.com"
-            },
-            {
-              title: "数据预测",
-              url: "http://warcraft.com"
-            },
-            {
-              title: "流量分析",
-              url: "http://overwatch.com",
-              hot: true
-            },
-            {
-              title: "广告发布",
-              url: "http://hearstone.com"
-            }
-          ]
-        },
-        app: {
-          last:true,
-          title: "手机应用类",
-          list: [
-            {
-              title: "91助手",
-              url: "http://weixin.com"
-            },
-            {
-              title: "产品助手",
-              url: "http://weixin.com",
-              hot:true
-            },
-            {
-              title: "智能地图",
-              url: "http://maps.com"
-            },
-            {
-              title: "语音助手",
-              url: "http://phone.com",
-              hot:true
-            }
-          ]
-        }
-      },
-      // newXi:{
-      //   newA:{
-      //   url:'http://baidu.com',
-      //   newX:[
-      //       {
-      //       text:'央视直播为湖北带货 一晚卖出6100万元'
-      //       },
-      //       {
-      //       text:'美国暂停资助世卫'
-      //       },
-      //       {
-      //       text:'三个疫苗获批试验'
-      //       },
-      //       {
-      //       text:'联想暂停招聘'
-      //       },
-      //       {
-      //       text:'美国确诊超60万'
-      //       },
-      //       {
-      //       text:'最年轻亿万富翁'
-      //       },
-      //       ]
-      //   }
-      // },
-      lists:[
-            {
-            title:'华硕电脑',
-            text:'华硕，坚为磐石！',
-            texts:'立即购买',
-            url:'http://baidu.com'
-            },
-            {
-            title:'方正电脑',
-            text:'方正，方方正正！',
-            texts:'立即购买',
-            url:'http://tengxun.com'
-            },
-            {
-            title:'惠普电脑',
-            text:'惠普，普惠天下！',
-            texts:'立即购买',
-            url:'http://ali.com'
-            },
-            {
-            title:'华为电脑',
-            text:'华为，我是水军！',
-            texts:'立即购买',
-            url:'http://huawei.com'
-            },
-        ]
-    };
+      productList:null,
+      boardList:null
+    }
   }
 };
 </script>
