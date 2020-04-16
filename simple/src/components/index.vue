@@ -22,11 +22,15 @@
       </div>
       <div class="index-left-block lastest-news">
         <h2>最新消息</h2>
-        <template v-for='x in newXi'>
-            <ul v-for='u in x.newX'>
-                <li><a v-bind:href='x.url'>{{u.text}}</a></li>
-            </ul>
-        </template>
+          <ul>
+            <!-- <li v-for='u in newXi'>
+              <a v-bind:href="u.url">{{u.text}}</a>
+              
+              </li> -->
+              <li v-for="news in newsList">
+            <a v-bind:href="news.url">{{ news.title }}</a>
+          </li>
+          </ul>
         
       </div>
     </div>
@@ -50,9 +54,23 @@
 
 
 <script>
+import axios from 'axios'
 export default {
+  mounted() {
+    axios.get("api/getNewsList")
+      .then((response) => {
+        // handle success
+        console.log(response);
+        this.newsList = response.data.list
+      })
+      .catch((error) => {
+        // handle error
+        console.log(error);
+      });
+  },
   data() {
     return {
+      newsList: [],
       productList: {
         pc: {
           title: "PC产品",
@@ -101,31 +119,31 @@ export default {
           ]
         }
       },
-      newXi:{
-        newA:{
-        url:'http://baidu.com',
-        newX:[
-            {
-            text:'央视直播为湖北带货 一晚卖出6100万元'
-            },
-            {
-            text:'美国暂停资助世卫'
-            },
-            {
-            text:'三个疫苗获批试验'
-            },
-            {
-            text:'联想暂停招聘'
-            },
-            {
-            text:'美国确诊超60万'
-            },
-            {
-            text:'最年轻亿万富翁'
-            },
-            ]
-        }
-      },
+      // newXi:{
+      //   newA:{
+      //   url:'http://baidu.com',
+      //   newX:[
+      //       {
+      //       text:'央视直播为湖北带货 一晚卖出6100万元'
+      //       },
+      //       {
+      //       text:'美国暂停资助世卫'
+      //       },
+      //       {
+      //       text:'三个疫苗获批试验'
+      //       },
+      //       {
+      //       text:'联想暂停招聘'
+      //       },
+      //       {
+      //       text:'美国确诊超60万'
+      //       },
+      //       {
+      //       text:'最年轻亿万富翁'
+      //       },
+      //       ]
+      //   }
+      // },
       lists:[
             {
             title:'华硕电脑',
