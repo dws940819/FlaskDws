@@ -22,13 +22,17 @@
     <div class="app-foot">
       <p>&copy;Dws版权所有</p>
     </div>  
+    <my-login></my-login>
   </div>
 </template>
 
 <script>
+import MyLogin from './components/myLogin'
 
 export default{
- 
+    components:{
+      MyLogin
+    }
 };
 
 </script>
