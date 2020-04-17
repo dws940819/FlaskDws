@@ -5,7 +5,7 @@
         <img src="./assets/logo.png" alt=""><span class="app-title">Dws商城</span>
         <div class="head-nav">
           <ul>
-            <li>登录</li>
+            <li v-on:click="showLoginView" >登录</li>
             <li class="nav-pile">|</li>
             <li>注册</li>
             <li class="nav-pile">|</li>
@@ -22,7 +22,7 @@
     <div class="app-foot">
       <p>&copy;Dws版权所有</p>
     </div>  
-    <my-login></my-login>
+    <my-login v-show="isShowLoginView" ></my-login>
   </div>
 </template>
 
@@ -32,7 +32,17 @@ import MyLogin from './components/myLogin'
 export default{
     components:{
       MyLogin
-    }
+    },
+    data(){
+      return{
+        isShowLoginView: false
+      }
+    },
+    methods: {
+      showLoginView(){
+        this.isShowLoginView = true
+      }
+    },
 };
 
 </script>
